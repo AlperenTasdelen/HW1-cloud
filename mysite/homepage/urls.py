@@ -3,7 +3,11 @@ from django.urls import path, include
 
 from . import views
 
+"""path('admin/', admin.site.urls),
+    path('', include('homepage.urls')),"""
+
+"""path('', views.hello),"""
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('homepage.urls')),
+    path('', views.catay)
 ]
