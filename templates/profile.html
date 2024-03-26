@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}</h1>
+    
+    <h2>Owned Items</h2>
+    <ul>
+        {% for item in user.owned_items %}
+            <li>{{ item.item_name }} - Quantity: {{ item.quantity }} - Price: ${{ item.price }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Favorite Items</h2>
+    <ul>
+        {% for item in user.favorite_items %}
+            <li>{{ item.item_name }}</li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
