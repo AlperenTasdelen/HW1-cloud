@@ -1,0 +1,40 @@
+<!-- new_private_lesson.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Private Lesson</title>
+</head>
+<body>
+    <h1>Add New Private Lesson</h1>
+    <form action="/add_private_lesson" method="POST">
+        <label for="title_private_lesson">Title:</label><br>
+        <input type="text" id="title_private_lesson" name="title_private_lesson"><br>
+        
+        <label for="tutor_name_private_lesson">Tutor Name:</label><br>
+        <input type="text" id="tutor_name_private_lesson" name="tutor_name_private_lesson"><br>
+        
+        <label for="lessons_private_lesson">Lessons:</label><br>
+        <input type="text" id="lessons_private_lesson" name="lessons_private_lesson"><br>
+        
+        <label for="location_private_lesson">Location:</label><br>
+        <input type="text" id="location_private_lesson" name="location_private_lesson"><br>
+        
+        <label for="duration_private_lesson">Duration:</label><br>
+        <input type="text" id="duration_private_lesson" name="duration_private_lesson"><br>
+        
+        <label for="price_private_lesson">Price:</label><br>
+        <input type="number" id="price_private_lesson" name="price_private_lesson" step="any"><br>
+        
+        <label for="image_private_lesson">Image URL:</label><br>
+        <input type="text" id="image_private_lesson" name="image_private_lesson"><br>
+        
+        <label for="description_private_lesson">Description:</label><br>
+        <textarea id="description_private_lesson" name="description_private_lesson" rows="4" cols="50"></textarea><br><br>
+        
+        <button type="submit">Add Private Lesson</button>
+    </form>
+</body>
+</html>
