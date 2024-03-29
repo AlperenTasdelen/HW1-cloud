@@ -1,0 +1,59 @@
+<!-- new_vehicle.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Vehicle</title>
+</head>
+<body>
+    <h1>Edit Vehicle</h1>
+    <form action="/edit_vehicle/{{ vehicle._id|string|urlencode }}" method="POST">
+        <label for="title_vehicle">Title:</label><br>
+        <input type="text" id="title_vehicle" name="title_vehicle" value="{{ vehicle.title }}"><br>
+        
+        <label for="type_vehicle">Type:</label><br>
+        <input type="text" id="type_vehicle" name="type_vehicle" value="{{ vehicle.type }}"><br>
+        
+        <label for="brand_vehicle">Brand:</label><br>
+        <input type="text" id="brand_vehicle" name="brand_vehicle" value="{{ vehicle.brand }}"><br>
+        
+        <label for="model_vehicle">Model:</label><br>
+        <input type="text" id="model_vehicle" name="model_vehicle" value="{{ vehicle.model }}"><br>
+        
+        <label for="year_vehicle">Year:</label><br>
+        <input type="number" id="year_vehicle" name="year_vehicle" value="{{ vehicle.year }}"><br>
+        
+        <label for="color_vehicle">Color:</label><br>
+        <input type="text" id="color_vehicle" name="color_vehicle" value="{{ vehicle.color }}"><br>
+        
+        <label for="engine_displacement_vehicle">Engine Displacement:</label><br>
+        <input type="text" id="engine_displacement_vehicle" name="engine_displacement_vehicle" value="{{ vehicle.engine_displacement }}"><br>
+        
+        <label for="fuel_type_vehicle">Fuel Type:</label><br>
+        <input type="text" id="fuel_type_vehicle" name="fuel_type_vehicle" value="{{ vehicle.fuel_type }}"><br>
+        
+        <label for="transmission_type_vehicle">Transmission Type:</label><br>
+        <input type="text" id="transmission_type_vehicle" name="transmission_type_vehicle" value="{{ vehicle.transmission_type }}"><br>
+        
+        <label for="mileage_vehicle">Mileage:</label><br>
+        <input type="number" id="mileage_vehicle" name="mileage_vehicle" value="{{ vehicle.mileage }}"><br>
+        
+        <label for="price_vehicle">Price:</label><br>
+        <input type="number" id="price_vehicle" name="price_vehicle" value="{{ vehicle.price }}"><br>
+        
+        <label for="image_vehicle">Image URL:</label><br>
+        <input type="url" id="image_vehicle" name="image_vehicle" value="{{ vehicle.image }}"><br>
+        
+        <label for="description_vehicle">Description:</label><br>
+        <textarea id="description_vehicle" name="description_vehicle" rows="4" cols="50">{{ vehicle.description }}</textarea><br><br>
+        
+        <label for="visible_vehicle">Visible to Regular Users:</label><br>
+        <input type="checkbox" id="visible_vehicle" name="visible_vehicle" {% if vehicle.isRegularAllowed %} checked {% endif %}><br><br>
+
+        <!-- Adjust the form action to include vehicle_id -->
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, s
 from flask_pymongo import PyMongo
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from bson import ObjectId
+import json
 
 app = Flask(__name__)
 
@@ -18,6 +20,7 @@ except Exception as e:
 
 db = client['CENGDENdatabase']
 users_collection = db['users']
+products_collection = db['products']
 
 @app.route('/logout')
 def logout():
@@ -28,7 +31,8 @@ def logout():
 def profile():
     username = session.get('username')
     if not username:
-        return redirect(url_for('login'))
+        #return redirect(url_for('login'))
+        return render_template('index.html')
     
     user = users_collection.find_one({'username': username})
     return render_template('profile.html', user=user)
@@ -54,6 +58,7 @@ def register():
             'username': username,
             'password': password
         }
+
         users_collection.insert_one(user_data)
         # Redirect or render another page
         return redirect(url_for('signin'))
@@ -76,6 +81,9 @@ def login():
 
 @app.route('/')
 def index():
+    #products = products_collection.find({isFeatured: True})
+    #products = products_collection.find()
+
     username = session.get('username')
     session['username'] = username
     return render_template('index.html')
@@ -83,7 +91,7 @@ def index():
 @app.route('/products')
 def products():
     #products = mongo.db.products.find()  # Retrieve products from the database
-    products = client.db.products.find()
+    products = products_collection.find()
     return render_template('products.html', products=products)
 
 @app.route('/new_item', methods=['GET', 'POST'])
@@ -112,12 +120,27 @@ def new_item():
         # Redirect to the profile page after adding the item
         return redirect(url_for('profile'))
     
+
+
     return render_template('new_item.html', username=username)
+
+@app.route('/edit_item', methods=['GET', 'POST'])
+def edit_item():
+    username = request.args.get('username')
+    
+    if not username:
+        # Handle the case where username or item_id is not provided
+        # You may redirect to the login page or display an error message
+        pass
+    
+    products = products_collection.find()
+    return render_template('edit_item.html', username=username, products=products)
 
 @app.route('/add_vehicle', methods=['POST'])
 def add_vehicle():
     if request.method == 'POST':
         # Retrieve form data
+        product_type = "vehicle"
         title = request.form['title_vehicle']
         vehicle_type = request.form['type_vehicle']
         brand = request.form['brand_vehicle']
@@ -131,10 +154,17 @@ def add_vehicle():
         price = float(request.form['price_vehicle'])
         image = request.form['image_vehicle']
         description = request.form['description_vehicle']
+        isRegularAllowed = request.form.get('visible_vehicle')
+
+        if not isRegularAllowed:
+            isRegularAllowed = False
+        else:
+            isRegularAllowed = True
 
         # Prepare item data
         vehicle_data = {
             'owner': session.get('username'),
+            'product_type': product_type,
             'title': title,
             'type': vehicle_type,
             'brand': brand,
@@ -147,11 +177,13 @@ def add_vehicle():
             'mileage': mileage,
             'price': price,
             'image': image,
-            'description': description
+            'description': description,
+            'isRegularAllowed': isRegularAllowed,
+            'isFeatured': False
         }
-
+        
         # Insert item into MongoDB
-        db.vehicles.insert_one(vehicle_data)
+        db.products.insert_one(vehicle_data)
 
         # Redirect to the profile page or any other page as needed
         return redirect(url_for('profile'))
@@ -160,6 +192,7 @@ def add_vehicle():
 def add_computer():
     if request.method == 'POST':
         # Retrieve form data
+        product_type = "computer"
         title = request.form['title_computer']
         computer_type = request.form['type_computer']
         brand = request.form['brand_computer']
@@ -173,10 +206,17 @@ def add_computer():
         price = float(request.form['price_computer'])
         image = request.form['image_computer']
         description = request.form['description_computer']
+        isRegularAllowed = request.form.get('visible_computer')
+
+        if not isRegularAllowed:
+            isRegularAllowed = False
+        else:
+            isRegularAllowed = True
 
         # Prepare item data
         computer_data = {
             'owner': session.get('username'),
+            'product_type': product_type,
             'title': title,
             'type': computer_type,
             'brand': brand,
@@ -189,11 +229,13 @@ def add_computer():
             'operating_system': operating_system,
             'price': price,
             'image': image,
-            'description': description
+            'description': description,
+            'isRegularAllowed': isRegularAllowed,
+            'isFeatured': False
         }
 
         # Insert item into MongoDB
-        db.computers.insert_one(computer_data)
+        db.products.insert_one(computer_data)
 
         # Redirect to the profile page or any other page as needed
         return redirect(url_for('profile'))
@@ -202,6 +244,7 @@ def add_computer():
 def add_phone():
     if request.method == 'POST':
         # Retrieve form data
+        product_type = "phone"
         title = request.form['title_phone']
         brand = request.form['brand_phone']
         model = request.form['model_phone']
@@ -215,10 +258,17 @@ def add_phone():
         price = float(request.form['price_phone'])
         image = request.form['image_phone']
         description = request.form['description_phone']
+        isRegularAllowed = request.form.get('visible_phone')
+
+        if not isRegularAllowed:
+            isRegularAllowed = False
+        else:
+            isRegularAllowed = True
 
         # Prepare item data
         phone_data = {
             'owner': session.get('username'),
+            'product_type': product_type,
             'title': title,
             'brand': brand,
             'model': model,
@@ -231,11 +281,13 @@ def add_phone():
             'battery_capacity': battery_capacity,
             'price': price,
             'image': image,
-            'description': description
+            'description': description,
+            'isRegularAllowed': isRegularAllowed,
+            'isFeatured': False
         }
 
         # Insert item into MongoDB
-        db.phones.insert_one(phone_data)
+        db.products.insert_one(phone_data)
 
         # Redirect to the profile page or any other page as needed
         return redirect(url_for('profile'))
@@ -244,6 +296,7 @@ def add_phone():
 def add_private_lesson():
     if request.method == 'POST':
         # Retrieve form data
+        product_type = "private-lesson"
         title = request.form['title_private_lesson']
         tutor_name = request.form['tutor_name_private_lesson']
         lessons = request.form['lessons_private_lesson']
@@ -252,10 +305,17 @@ def add_private_lesson():
         price = float(request.form['price_private_lesson'])
         image = request.form['image_private_lesson']
         description = request.form['description_private_lesson']
+        isRegularAllowed = request.form.get('visible_private_lesson')
+        
+        if not isRegularAllowed:
+            isRegularAllowed = False
+        else:
+            isRegularAllowed = True
 
         # Prepare item data
         private_lesson_data = {
             'owner': session.get('username'),
+            'product_type': product_type,
             'title': title,
             'tutor_name': tutor_name,
             'lessons': lessons,
@@ -263,11 +323,13 @@ def add_private_lesson():
             'duration': duration,
             'price': price,
             'image': image,
-            'description': description
+            'description': description,
+            'isRegularAllowed': isRegularAllowed,
+            'isFeatured': False
         }
 
         # Insert item into MongoDB
-        db.private_lessons.insert_one(private_lesson_data)
+        db.products.insert_one(private_lesson_data)
 
         # Redirect to the profile page or any other page as needed
         return redirect(url_for('profile'))
@@ -287,7 +349,7 @@ def choose_item_type():
         # Handle invalid input
         return "Invalid item type selected"
 
-# Route for adding a new vehicle
+# Route for adding a new product
 @app.route('/new_vehicle')
 def new_vehicle():
     return render_template('new_vehicle.html')
@@ -304,5 +366,203 @@ def new_phone():
 def new_private_lesson():
     return render_template('new_private_lesson.html')
 
+# Route for editing a product
+@app.route('/edit_vehicle/<string:product_id>', methods=['GET', 'POST'])
+def edit_vehicle(product_id):
+    if(request.method == 'POST'):
+        title = request.form['title_vehicle']
+        vehicle_type = request.form['type_vehicle']
+        brand = request.form['brand_vehicle']
+        model = request.form['model_vehicle']
+        year = int(request.form['year_vehicle'])
+        color = request.form['color_vehicle']
+        engine_displacement = request.form['engine_displacement_vehicle']
+        fuel_type = request.form['fuel_type_vehicle']
+        transmission_type = request.form['transmission_type_vehicle']
+        mileage = float(request.form['mileage_vehicle'])
+        price = float(request.form['price_vehicle'])
+        image = request.form['image_vehicle']
+        description = request.form['description_vehicle']
+        isRegularAllowed = request.form.get('visible_vehicle')
+
+        if not isRegularAllowed:
+            isRegularAllowed = False
+        else:
+            isRegularAllowed = True
+        
+        products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
+            'title': title,
+            'type': vehicle_type,
+            'brand': brand,
+            'model': model,
+            'year': year,
+            'color': color,
+            'engine_displacement': engine_displacement,
+            'fuel_type': fuel_type,
+            'transmission_type': transmission_type,
+            'mileage': mileage,
+            'price': price,
+            'image': image,
+            'description': description,
+            'isRegularAllowed': isRegularAllowed
+        }})
+
+        return redirect(url_for('profile'))
+    
+    vehicle = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('edit_vehicle.html', vehicle=vehicle)
+
+@app.route('/edit_computer/<string:product_id>', methods=['GET', 'POST'])
+def edit_computer(product_id):
+    if(request.method == 'POST'):
+        title = request.form['title_computer']
+        computer_type = request.form['type_computer']
+        brand = request.form['brand_computer']
+        model = request.form['model_computer']
+        year = int(request.form['year_computer'])
+        processor = request.form['processor_computer']
+        ram = request.form['ram_computer']
+        storage = request.form['storage_computer']
+        graphics_card = request.form['graphics_card_computer']
+        operating_system = request.form['operating_system_computer']
+        price = float(request.form['price_computer'])
+        image = request.form['image_computer']
+        description = request.form['description_computer']
+        isRegularAllowed = request.form.get('visible_computer')
+
+        if not isRegularAllowed:
+            isRegularAllowed = False
+        else:
+            isRegularAllowed = True
+
+        products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
+            'title': title,
+            'type': computer_type,
+            'brand': brand,
+            'model': model,
+            'year': year,
+            'processor': processor,
+            'ram': ram,
+            'storage': storage,
+            'graphics_card': graphics_card,
+            'operating_system': operating_system,
+            'price': price,
+            'image': image,
+            'description': description,
+            'isRegularAllowed': isRegularAllowed
+        }})
+
+        return redirect(url_for('profile'))
+    computer = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('edit_computer.html', computer=computer)
+
+@app.route('/edit_phone/<string:product_id>', methods=['GET', 'POST'])
+def edit_phone(product_id):
+    if(request.method == 'POST'):
+        title = request.form['title_phone']
+        brand = request.form['brand_phone']
+        model = request.form['model_phone']
+        year = int(request.form['year_phone'])
+        operating_system = request.form['operating_system_phone']
+        processor = request.form['processor_phone']
+        ram = request.form['ram_phone']
+        storage = request.form['storage_phone']
+        camera_specifications = request.form['camera_specifications_phone']
+        battery_capacity = request.form['battery_capacity_phone']
+        price = float(request.form['price_phone'])
+        image = request.form['image_phone']
+        description = request.form['description_phone']
+        isRegularAllowed = request.form.get('visible_phone')
+
+        if not isRegularAllowed:
+            isRegularAllowed = False
+        else:
+            isRegularAllowed = True
+
+        products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
+            'title': title,
+            'brand': brand,
+            'model': model,
+            'year': year,
+            'operating_system': operating_system,
+            'processor': processor,
+            'ram': ram,
+            'storage': storage,
+            'camera_specifications': camera_specifications,
+            'battery_capacity': battery_capacity,
+            'price': price,
+            'image': image,
+            'description': description,
+            'isRegularAllowed': isRegularAllowed
+        }})
+
+        return redirect(url_for('profile'))
+    phone = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('edit_phone.html', phone=phone)
+
+@app.route('/edit_private-lesson/<string:product_id>', methods=['GET', 'POST'])
+def edit_private_lesson(product_id):
+    if(request.method == 'POST'):
+        title = request.form['title_private_lesson']
+        tutor_name = request.form['tutor_name_private_lesson']
+        lessons = request.form['lessons_private_lesson']
+        location = request.form['location_private_lesson']
+        duration = request.form['duration_private_lesson']
+        price = float(request.form['price_private_lesson'])
+        image = request.form['image_private_lesson']
+        description = request.form['description_private_lesson']
+        isRegularAllowed = request.form.get('visible_private_lesson')
+
+        if not isRegularAllowed:
+            isRegularAllowed = False
+        else:
+            isRegularAllowed = True
+
+        products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
+            'title': title,
+            'tutor_name': tutor_name,
+            'lessons': lessons,
+            'location': location,
+            'duration': duration,
+            'price': price,
+            'image': image,
+            'description': description,
+            'isRegularAllowed': isRegularAllowed
+        }})
+
+        return redirect(url_for('profile'))
+    private_lesson = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('edit_private_lesson.html', private_lesson=private_lesson)
+
+# Define routes for different product types
+@app.route('/display_vehicle/<string:product_id>')
+def display_vehicle(product_id):
+    # Logic to fetch vehicle information from the database
+    # You can use MongoDB to retrieve information about the product with the given product_id
+    # Replace this with your actual logic
+    myproduct = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('display_vehicle.html', product = myproduct)
+
+@app.route('/display_computer/<string:product_id>')
+def display_computer(product_id):
+    # Logic to fetch computer information from the database
+    # Replace this with your actual logic
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('display_computer.html', product=product)
+
+@app.route('/display_phone/<string:product_id>')
+def display_phone(product_id):
+    # Logic to fetch phone information from the database
+    # Replace this with your actual logic
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('display_phone.html', product=product)
+
+@app.route('/display_private-lesson/<string:product_id>')
+def display_private_lesson(product_id):
+    # Logic to fetch private lesson information from the database
+    # Replace this with your actual logic
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('display_private_lesson.html', product=product)
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

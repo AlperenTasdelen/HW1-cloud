@@ -1,0 +1,58 @@
+<!-- new_phone.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Phone</title>
+</head>
+<body>
+    <h1>Edit Phone</h1>
+    <form action="/edit_phone/{{ phone._id|string|urlencode }}" method="POST">
+        <label for="title_phone">Title:</label><br>
+        <input type="text" id="title_phone" name="title_phone" value="{{ phone.title }}"><br>
+        
+        <label for="brand_phone">Brand:</label><br>
+        <input type="text" id="brand_phone" name="brand_phone" value="{{ phone.brand }}"><br>
+        
+        <label for="model_phone">Model:</label><br>
+        <input type="text" id="model_phone" name="model_phone" value="{{ phone.model }}"><br>
+        
+        <label for="year_phone">Year:</label><br>
+        <input type="number" id="year_phone" name="year_phone" value="{{ phone.year }}"><br>
+        
+        <label for="operating_system_phone">Operating System:</label><br>
+        <input type="text" id="operating_system_phone" name="operating_system_phone" value="{{ phone.operating_system }}"><br>
+        
+        <label for="processor_phone">Processor:</label><br>
+        <input type="text" id="processor_phone" name="processor_phone" value="{{ phone.processor }}"><br>
+        
+        <label for="ram_phone">RAM:</label><br>
+        <input type="text" id="ram_phone" name="ram_phone" value="{{ phone.ram }}"><br>
+        
+        <label for="storage_phone">Storage:</label><br>
+        <input type="text" id="storage_phone" name="storage_phone" value="{{ phone.storage }}"><br>
+        
+        <label for="camera_specifications_phone">Camera Specifications:</label><br>
+        <input type="text" id="camera_specifications_phone" name="camera_specifications_phone" value="{{ phone.camera_specifications }}"><br>
+        
+        <label for="battery_capacity_phone">Battery Capacity:</label><br>
+        <input type="text" id="battery_capacity_phone" name="battery_capacity_phone" value="{{ phone.battery_capacity }}"><br>
+        
+        <label for="price_phone">Price:</label><br>
+        <input type="number" id="price_phone" name="price_phone" step="any" value="{{ phone.price }}"><br>
+        
+        <label for="image_phone">Image URL:</label><br>
+        <input type="text" id="image_phone" name="image_phone" value="{{ phone.image }}"><br>
+        
+        <label for="description_phone">Description:</label><br>
+        <textarea id="description_phone" name="description_phone" rows="4" cols="50">{{ phone.description }}</textarea><br><br>
+
+        <label for="visible_phone">Visible to Regular Users:</label><br>
+        <input type="checkbox" id="visible_phone" name="visible_phone" {% if phone.visible %} checked {% endif %}><br><br>
+        
+        <button type="submit">Add Phone</button>
+    </form>
+</body>
+</html>

@@ -1,18 +1,16 @@
-<!-- templates/products.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
+    <title>Edit Item</title>
 </head>
 <body>
-    <h1>Products</h1>
+    <h1>Choose an item to edit</h1>
     <ul>
         {% for product in products %}
             <li>
-                <a href="/display_{{ product.product_type }}/{{ product._id|string|urlencode }}">{{ product.title }}</a>
+                <a href="/edit_{{ product.product_type }}/{{ product._id|string|urlencode }}">{{ product.title }}</a>
             </li>
         {% endfor %}
     </ul>

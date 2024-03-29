@@ -1,0 +1,43 @@
+<!-- new_private_lesson.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Private Lesson</title>
+</head>
+<body>
+    <h1>Edit Private Lesson</h1>
+    <form action="/edit_private-lesson/{{ private_lesson._id|string|urlencode }}" method="POST">
+        <label for="title_private_lesson">Title:</label><br>
+        <input type="text" id="title_private_lesson" name="title_private_lesson" value="{{ private_lesson.title }}"><br>
+        
+        <label for="tutor_name_private_lesson">Tutor Name:</label><br>
+        <input type="text" id="tutor_name_private_lesson" name="tutor_name_private_lesson" value="{{ private_lesson.tutor_name }}"><br>
+        
+        <label for="lessons_private_lesson">Lessons:</label><br>
+        <input type="text" id="lessons_private_lesson" name="lessons_private_lesson" value="{{ private_lesson.lessons }}"><br>
+        
+        <label for="location_private_lesson">Location:</label><br>
+        <input type="text" id="location_private_lesson" name="location_private_lesson" value="{{ private_lesson.location }}"><br>
+        
+        <label for="duration_private_lesson">Duration:</label><br>
+        <input type="text" id="duration_private_lesson" name="duration_private_lesson" value="{{ private_lesson.duration }}"><br>
+        
+        <label for="price_private_lesson">Price:</label><br>
+        <input type="number" id="price_private_lesson" name="price_private_lesson" step="any" value="{{ private_lesson.price }}"><br>
+        
+        <label for="image_private_lesson">Image URL:</label><br>
+        <input type="text" id="image_private_lesson" name="image_private_lesson" value="{{ private_lesson.image }}"><br>
+        
+        <label for="description_private_lesson">Description:</label><br>
+        <textarea id="description_private_lesson" name="description_private_lesson" rows="4" cols="50">{{ private_lesson.description }}</textarea><br><br>
+
+        <label for="visible_private_lesson">Visible to Regular Users:</label><br>
+        <input type="checkbox" id="visible_private_lesson" name="visible_private_lesson" {% if private_lesson.visible %} checked {% endif %}><br><br>
+        
+        <button type="submit">Add Private Lesson</button>
+    </form>
+</body>
+</html>
