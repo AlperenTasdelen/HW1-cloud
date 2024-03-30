@@ -20,10 +20,16 @@
     <p>Price: {{ product.price }}</p>
     <p>Image: {{ product.image }}</p>
     <p>Description: {{ product.description }}</p>
-    {% if username %}
+    {% if username and username not in product.favoriteList%}
         <form action="/add_to_favorites/{{ product._id|string|urlencode }}" method="POST">
             <input type="hidden" name="product_id" value="{{ product._id }}">
             <button type="submit">Add to Favorites</button>
+        </form>
+    {% endif %}
+    {% if username and username in product.favoriteList%}
+        <form action="/remove_from_favorites/{{ product._id|string|urlencode }}" method="POST">
+            <input type="hidden" name="product_id" value="{{ product._id }}">
+            <button type="submit">Remove From Favorites</button>
         </form>
     {% endif %}
     {% if username == product.owner %}

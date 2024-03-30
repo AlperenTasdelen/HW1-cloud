@@ -21,8 +21,12 @@
     
     <h2>Favorite Items</h2>
     <ul>
-        {% for item in user.favorite_items %}
-            <li>{{ item.item_name }}</li>
+        {% for product2 in products2 %}
+            {% if user.username in product2.favoriteList %}
+                <li>
+                    <a href="/display_{{ product2.product_type }}/{{ product2._id|string|urlencode }}">{{ product2.title }}</a>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
     

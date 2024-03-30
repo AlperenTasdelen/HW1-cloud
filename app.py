@@ -35,7 +35,9 @@ def profile():
         return render_template('signin.html')
     
     user = users_collection.find_one({'username': username})
-    return render_template('profile.html', user=user)
+    products = products_collection.find()
+    products2 = products_collection.find()
+    return render_template('profile.html', user=user, products=products, products2=products2)
 
 @app.route('/signin')
 def signin():
@@ -56,7 +58,8 @@ def register():
         
         user_data = {
             'username': username,
-            'password': password
+            'password': password,
+            'isAdmin': False
         }
 
         users_collection.insert_one(user_data)
