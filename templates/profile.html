@@ -10,8 +10,12 @@
     
     <h2>Owned Items</h2>
     <ul>
-        {% for item in user.owned_items %}
-            <li>{{ item.item_name }} - Quantity: {{ item.quantity }} - Price: ${{ item.price }}</li>
+        {% for product in products %}
+            {% if product.owner == user.username %}
+                <li>
+                    <a href="/display_{{ product.product_type }}/{{ product._id|string|urlencode }}">{{ product.title }}</a>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
     

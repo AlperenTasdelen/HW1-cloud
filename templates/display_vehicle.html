@@ -26,6 +26,18 @@
             <button type="submit">Add to Favorites</button>
         </form>
     {% endif %}
+    {% if username == product.owner %}
+        <form action="/edit_vehicle/{{ product._id|string|urlencode }}" method="POST">
+            <input type="hidden" name="product_id" value="{{ product._id }}">
+            <button type="submit">Edit Product</button>
+        </form>
+    {% endif %}
+    {% if username == product.owner %}
+        <form action="/delete_product/{{ product._id|string|urlencode }}" method="POST">
+            <input type="hidden" name="product_id" value="{{ product._id }}">
+            <button type="submit">Delete Product</button>
+        </form>
+    {% endif %}
 </body>
 </html>
 
