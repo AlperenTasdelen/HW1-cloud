@@ -32,7 +32,11 @@
     
     <a href="{{ url_for('logout') }}">Logout</a>
     <a href="{{ url_for('index') }}">Back to Home</a>
-    <a href="{{ url_for('new_item', username=username) }}">Manage New Item</a>
-    <a href="{{ url_for('edit_item', username=username) }}">Edit Item</a>
+    <a href="{{ url_for('new_item') }}">Manage New Item</a>
+    <a href="{{ url_for('edit_item') }}">Edit Item</a>
+    <a href="/display_user/{{ user.username }}">Manage Profile</a>
+    {% if user.isAdmin == true %}
+        <a href="{{ url_for('user_list') }}">User List</a>
+    {% endif %}
 </body>
 </html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <!-- Add any necessary CSS or Bootstrap links here -->
+</head>
+<body>
+    <h1>User Details</h1>
+    <div>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Password:</strong> {{ user.password }}</p>
+        <!-- Add more user attributes if needed -->
+    </div>
+    <!-- Add any necessary JavaScript scripts here -->
+    <form method="post" action="/edit_user_own/{{ user._id|string|urlencode }}">
+        <button type="submit">Edit Account</button>
+    <form method="post" action="/delete_user_own/{{ user.username }}">
+        <button type="submit">Delete Account</button>
+    </form>
+</body>
+</html>

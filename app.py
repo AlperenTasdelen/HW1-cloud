@@ -97,6 +97,68 @@ def products():
     products = products_collection.find()
     return render_template('products.html', products=products)
 
+@app.route('/user_list')
+def user_list():
+    users = users_collection.find()
+    return render_template('user_list.html', users=users)
+
+@app.route('/display_user/<string:username>', methods=['GET'])
+def display_user(username):
+    user = users_collection.find_one({'username': username})
+    return render_template('display_user.html', user=user)
+
+@app.route('/edit_user/<string:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    if request.method == 'POST':
+        # Retrieve form data
+        user = users_collection.find_one({'_id': ObjectId(user_id)})
+        username = request.form['username']
+        password = request.form['password']
+
+        # Update user data
+        users_collection.update_one({'username': username}, {'$set': {
+            'username': username,  # Update username if necessary, otherwise use the existing username
+            'password': password
+        }})
+
+        return redirect(url_for('/'))
+
+    user = users_collection.find_one({'username': username})
+    return render_template('edit_user.html', user=user)
+
+@app.route('/edit_user_own/<string:user_id>', methods=['GET', 'POST'])
+def edit_user_own(user_id):
+    if request.method == 'POST':
+        # Retrieve form data
+        # user = users_collection.find_one({'_id': ObjectId(user_id)})
+        username = request.form['username']
+        password = request.form['password']
+
+        # Update user data
+        #users_collection.update_one({'._id': ObjectId(user_id)}, {'$set': {
+            #'username': username,  # Update username if necessary, otherwise use the existing username
+            #'password': password
+        #}})
+
+        return redirect(url_for('index'))
+
+    #user = users_collection.find_one({'username': username})
+    #return render_template('edit_user_own.html', user=user)
+    return redirect(url_for('index'))
+
+
+@app.route('/delete_user/<string:username>', methods=['POST'])
+def delete_user(username):
+    users_collection.delete_one({'username': username})
+    products_collection.delete_many({'owner': username})
+    return redirect(url_for('user_list'))
+
+@app.route('/delete_user_own/<string:username>', methods=['POST'])
+def delete_user_own(username):
+    users_collection.delete_one({'username': username})
+    products_collection.delete_many({'owner': username})
+    return redirect(url_for('logout'))
+
 @app.route('/new_item', methods=['GET', 'POST'])
 def new_item():
     username = request.args.get('username')
@@ -183,7 +245,8 @@ def add_vehicle():
             'description': description,
             'isRegularAllowed': isRegularAllowed,
             'isFeatured': False,
-            'favoriteList': []
+            'favoriteList': [],
+            'isActivated': True
         }
         
         # Insert item into MongoDB
@@ -236,7 +299,8 @@ def add_computer():
             'description': description,
             'isRegularAllowed': isRegularAllowed,
             'isFeatured': False,
-            'favoriteList': []
+            'favoriteList': [],
+            'isActivated': True
         }
 
         # Insert item into MongoDB
@@ -289,7 +353,8 @@ def add_phone():
             'description': description,
             'isRegularAllowed': isRegularAllowed,
             'isFeatured': False,
-            'favoriteList': []
+            'favoriteList': [],
+            'isActivated': True
         }
 
         # Insert item into MongoDB
@@ -332,7 +397,8 @@ def add_private_lesson():
             'description': description,
             'isRegularAllowed': isRegularAllowed,
             'isFeatured': False,
-            'favoriteList': []
+            'favoriteList': [],
+            'isActivated': True
         }
 
         # Insert item into MongoDB
@@ -546,8 +612,10 @@ def display_vehicle(product_id):
     # Logic to fetch vehicle information from the database
     # You can use MongoDB to retrieve information about the product with the given product_id
     # Replace this with your actual logic
+    user = users_collection.find_one({'username': session.get('username')})
+    is_admin = user.get('isAdmin', False)
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_vehicle.html', product = product, username = session.get('username'))
+    return render_template('display_vehicle.html', product = product, username = session.get('username'), is_admin = is_admin)
 
 @app.route('/display_computer/<string:product_id>')
 def display_computer(product_id):
@@ -595,6 +663,16 @@ def remove_from_favorites(product_id):
 @app.route('/delete_product/<string:product_id>', methods=['POST'])
 def delete_product(product_id):
     products_collection.delete_one({'_id': ObjectId(product_id)})
+    return redirect(url_for('profile'))
+
+@app.route('/activate_product/<string:product_id>', methods=['POST'])
+def activate_product(product_id):
+    products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'isActivated': 'true'}})
+    return redirect(url_for('profile'))
+
+@app.route('/deactivate_product/<string:product_id>', methods=['POST'])
+def deactivate_product(product_id):
+    products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'isActivated': 'false'}})
     return redirect(url_for('profile'))
 
 if __name__ == '__main__':

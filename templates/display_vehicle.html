@@ -38,10 +38,22 @@
             <button type="submit">Edit Product</button>
         </form>
     {% endif %}
-    {% if username == product.owner %}
+    {% if username == product.owner or is_admin == true %}
         <form action="/delete_product/{{ product._id|string|urlencode }}" method="POST">
             <input type="hidden" name="product_id" value="{{ product._id }}">
             <button type="submit">Delete Product</button>
+        </form>
+    {% endif %}
+    {% if username and product.isActivated == false %}
+        <form action="/activate_product/{{ product._id|string|urlencode }}" method="POST">
+            <input type="hidden" name="product_id" value="{{ product._id }}">
+            <button type="submit">Activate Product</button>
+        </form>
+    {% endif %}
+    {% if username and product.isActivated == true %}
+        <form action="/deactivate_product/{{ product._id|string|urlencode }}" method="POST">
+            <input type="hidden" name="product_id" value="{{ product._id }}">
+            <button type="submit">Deactivate Product</button>
         </form>
     {% endif %}
 </body>

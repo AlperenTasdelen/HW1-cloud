@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <!-- Add any necessary CSS or Bootstrap links here -->
+</head>
+<body>
+    <h1>User List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Password</th>
+                <th>Details</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user._id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td><a href="{{ url_for('display_user', username=user.username) }}">Details</a></td>
+                <td>
+                    <form method="post" action="{{ url_for('delete_user', username=user.username) }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+                <!-- Add more table data if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Add any necessary JavaScript scripts here -->
+</body>
+</html>
