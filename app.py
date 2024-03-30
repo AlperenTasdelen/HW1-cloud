@@ -179,7 +179,8 @@ def add_vehicle():
             'image': image,
             'description': description,
             'isRegularAllowed': isRegularAllowed,
-            'isFeatured': False
+            'isFeatured': False,
+            'favoriteList': []
         }
         
         # Insert item into MongoDB
@@ -231,7 +232,8 @@ def add_computer():
             'image': image,
             'description': description,
             'isRegularAllowed': isRegularAllowed,
-            'isFeatured': False
+            'isFeatured': False,
+            'favoriteList': []
         }
 
         # Insert item into MongoDB
@@ -283,7 +285,8 @@ def add_phone():
             'image': image,
             'description': description,
             'isRegularAllowed': isRegularAllowed,
-            'isFeatured': False
+            'isFeatured': False,
+            'favoriteList': []
         }
 
         # Insert item into MongoDB
@@ -325,7 +328,8 @@ def add_private_lesson():
             'image': image,
             'description': description,
             'isRegularAllowed': isRegularAllowed,
-            'isFeatured': False
+            'isFeatured': False,
+            'favoriteList': []
         }
 
         # Insert item into MongoDB
@@ -534,7 +538,6 @@ def edit_private_lesson(product_id):
     private_lesson = products_collection.find_one({'_id': ObjectId(product_id)})
     return render_template('edit_private_lesson.html', private_lesson=private_lesson)
 
-# Define routes for different product types
 @app.route('/display_vehicle/<string:product_id>/<string:owner>')
 def display_vehicle(product_id, owner):
     # Logic to fetch vehicle information from the database
@@ -568,11 +571,11 @@ def display_private_lesson(product_id, owner):
 def add_to_favorites(product_id):
     product = products_collection.find_one({'_id': ObjectId(product_id)})
     if product:
-        favouriteList = product.get('favouriteList', [])
+        favoriteList = product.get('favoriteList', [])
         username = session.get('username')
-        if username not in favouriteList:
-            favouriteList.append(username)
-            products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'favouriteList': favouriteList}})
+        if username not in favoriteList:
+            favoriteList.append(username)
+            products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'favoriteList': favoriteList}})
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
