@@ -538,30 +538,30 @@ def edit_private_lesson(product_id):
     private_lesson = products_collection.find_one({'_id': ObjectId(product_id)})
     return render_template('edit_private_lesson.html', private_lesson=private_lesson)
 
-@app.route('/display_vehicle/<string:product_id>/<string:owner>')
-def display_vehicle(product_id, owner):
+@app.route('/display_vehicle/<string:product_id>')
+def display_vehicle(product_id):
     # Logic to fetch vehicle information from the database
     # You can use MongoDB to retrieve information about the product with the given product_id
     # Replace this with your actual logic
     product = products_collection.find_one({'_id': ObjectId(product_id)})
     return render_template('display_vehicle.html', product = product, username = session.get('username'))
 
-@app.route('/display_computer/<string:product_id>/<string:owner>')
-def display_computer(product_id, owner):
+@app.route('/display_computer/<string:product_id>')
+def display_computer(product_id):
     # Logic to fetch computer information from the database
     # Replace this with your actual logic
     product = products_collection.find_one({'_id': ObjectId(product_id)})
     return render_template('display_computer.html', product=product, username = session.get('username'))
 
-@app.route('/display_phone/<string:product_id>/<string:owner>')
-def display_phone(product_id, owner):
+@app.route('/display_phone/<string:product_id>')
+def display_phone(product_id):
     # Logic to fetch phone information from the database
     # Replace this with your actual logic
     product = products_collection.find_one({'_id': ObjectId(product_id)})
     return render_template('display_phone.html', product=product, username = session.get('username'))
 
-@app.route('/display_private-lesson/<string:product_id>/<string:owner>')
-def display_private_lesson(product_id, owner):
+@app.route('/display_private-lesson/<string:product_id>')
+def display_private_lesson(product_id):
     # Logic to fetch private lesson information from the database
     # Replace this with your actual logic
     product = products_collection.find_one({'_id': ObjectId(product_id)})
@@ -577,6 +577,22 @@ def add_to_favorites(product_id):
             favoriteList.append(username)
             products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'favoriteList': favoriteList}})
     return redirect(url_for('index'))
+
+@app.route('/remove_from_favorites/<string:product_id>', methods=['POST'])
+def remove_from_favorites(product_id):
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    if product:
+        favoriteList = product.get('favoriteList', [])
+        username = session.get('username')
+        if username in favoriteList:
+            favoriteList.remove(username)
+            products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'favoriteList': favoriteList}})
+    return redirect(url_for('index'))
+
+@app.route('/delete_product/<string:product_id>', methods=['POST'])
+def delete_product(product_id):
+    products_collection.delete_one({'_id': ObjectId(product_id)})
+    return redirect(url_for('profile'))
 
 if __name__ == '__main__':
     app.run(debug=True)
