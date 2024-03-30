@@ -20,5 +20,11 @@
     <p>Price: {{ product.price }}</p>
     <p>Image: {{ product.image }}</p>
     <p>Description: {{ product.description }}</p>
+    {% if username %}
+        <form action="/add_to_favorites" method="POST">
+            <input type="hidden" name="product_id" value="{{ product._id }}">
+            <button type="submit">Add to Favorites</button>
+        </form>
+    {% endif %}
 </body>
 </html>

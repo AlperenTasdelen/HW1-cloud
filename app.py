@@ -32,7 +32,7 @@ def profile():
     username = session.get('username')
     if not username:
         #return redirect(url_for('login'))
-        return render_template('index.html')
+        return render_template('signin.html')
     
     user = users_collection.find_one({'username': username})
     return render_template('profile.html', user=user)
@@ -535,34 +535,45 @@ def edit_private_lesson(product_id):
     return render_template('edit_private_lesson.html', private_lesson=private_lesson)
 
 # Define routes for different product types
-@app.route('/display_vehicle/<string:product_id>')
-def display_vehicle(product_id):
+@app.route('/display_vehicle/<string:product_id>/<string:owner>')
+def display_vehicle(product_id, owner):
     # Logic to fetch vehicle information from the database
     # You can use MongoDB to retrieve information about the product with the given product_id
     # Replace this with your actual logic
-    myproduct = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_vehicle.html', product = myproduct)
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('display_vehicle.html', product = product, username = session.get('username'))
 
-@app.route('/display_computer/<string:product_id>')
-def display_computer(product_id):
+@app.route('/display_computer/<string:product_id>/<string:owner>')
+def display_computer(product_id, owner):
     # Logic to fetch computer information from the database
     # Replace this with your actual logic
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_computer.html', product=product)
+    return render_template('display_computer.html', product=product, username = session.get('username'))
 
-@app.route('/display_phone/<string:product_id>')
-def display_phone(product_id):
+@app.route('/display_phone/<string:product_id>/<string:owner>')
+def display_phone(product_id, owner):
     # Logic to fetch phone information from the database
     # Replace this with your actual logic
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_phone.html', product=product)
+    return render_template('display_phone.html', product=product, username = session.get('username'))
 
-@app.route('/display_private-lesson/<string:product_id>')
-def display_private_lesson(product_id):
+@app.route('/display_private-lesson/<string:product_id>/<string:owner>')
+def display_private_lesson(product_id, owner):
     # Logic to fetch private lesson information from the database
     # Replace this with your actual logic
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_private_lesson.html', product=product)
+    return render_template('display_private_lesson.html', product=product, username = session.get('username'))
+
+@app.route('/add_to_favorites/<string:product_id>', methods=['POST'])
+def add_to_favorites(product_id):
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    if product:
+        favouriteList = product.get('favouriteList', [])
+        username = session.get('username')
+        if username not in favouriteList:
+            favouriteList.append(username)
+            products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'favouriteList': favouriteList}})
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
