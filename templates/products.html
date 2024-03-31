@@ -9,14 +9,23 @@
 </head>
 <body>
     <h1>Products</h1>
+    <a href="/">Home</a>
     <ul>
         {% for product in products %}
-            {% if product.isActivated == true %}
+            {% if product.isActivated == true and (username or product.isRegularAllowed == true) %}
                 <li>
                     <a href="/display_{{ product.product_type }}/{{ product._id|string|urlencode }}">{{ product.title }}</a>
                 </li>
             {% endif %}
         {% endfor %}
+    </ul>
+    <h2>Categories:</h2>
+    <ul>
+        <li><a href="/products?category=all">All</a></li>
+        <li><a href="/products?category=vehicle">Vehicle</a></li>
+        <li><a href="/products?category=computer">Computer</a></li>
+        <li><a href="/products?category=phone">Phone</a></li>
+        <li><a href="/products?category=private-lesson">Private Lesson</a></li>
     </ul>
 </body>
 </html>

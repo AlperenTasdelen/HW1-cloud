@@ -11,10 +11,10 @@
     <h1>Edit User</h1>
     <form action="/edit_user_own/{{ user._id|string|urlencode }}" method="POST">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br><br>
+        <input type="text" id="username" name="username" required><br><br>
         
         <label for="password">New Password:</label>
-        <input type="password" id="password" name="password"><br><br>
+        <input type="password" id="password" name="password" required><br><br>
         
         <!-- Add more input fields for other user attributes if needed -->
 

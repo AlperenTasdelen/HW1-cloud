@@ -33,7 +33,7 @@
         </form>
     {% endif %}
     {% if username == product.owner %}
-        <form action="/edit_vehicle/{{ product._id|string|urlencode }}" method="POST">
+        <form action="/rotate_vehicle/{{ product._id|string|urlencode }}" method="POST">
             <input type="hidden" name="product_id" value="{{ product._id }}">
             <button type="submit">Edit Product</button>
         </form>

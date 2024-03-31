@@ -15,7 +15,7 @@
         <!-- Add more user attributes if needed -->
     </div>
     <!-- Add any necessary JavaScript scripts here -->
-    <form method="post" action="/edit_user_own/{{ user._id|string|urlencode }}">
+    <form method="post" action="/rotate_edit/{{ user._id|string|urlencode }}">
         <button type="submit">Edit Account</button>
     <form method="post" action="/delete_user_own/{{ user.username }}">
         <button type="submit">Delete Account</button>

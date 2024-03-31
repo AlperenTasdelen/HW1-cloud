@@ -93,13 +93,19 @@ def index():
 
 @app.route('/products')
 def products():
-    #products = mongo.db.products.find()  # Retrieve products from the database
-    products = products_collection.find()
-    return render_template('products.html', products=products)
+    category = request.args.get('category')
+    query = {}  # Define a query to filter products based on category
+
+    if category:
+        if category != 'all':
+            query['product_type'] = category
+
+    products = products_collection.find(query)
+    return render_template('products.html', products=products, username = session.get('username'))
 
 @app.route('/user_list')
 def user_list():
-    users = users_collection.find()
+    users = users_collection.find({'isAdmin': False})
     return render_template('user_list.html', users=users)
 
 @app.route('/display_user/<string:username>', methods=['GET'])
@@ -121,7 +127,7 @@ def edit_user(user_id):
             'password': password
         }})
 
-        return redirect(url_for('/'))
+        return redirect(url_for('/user_list'))
 
     user = users_collection.find_one({'username': username})
     return render_template('edit_user.html', user=user)
@@ -135,17 +141,14 @@ def edit_user_own(user_id):
         password = request.form['password']
 
         # Update user data
-        #users_collection.update_one({'._id': ObjectId(user_id)}, {'$set': {
-            #'username': username,  # Update username if necessary, otherwise use the existing username
-            #'password': password
-        #}})
+        users_collection.update_one({'_id': ObjectId(user_id)}, {'$set': {
+            'username': username,  # Update username if necessary, otherwise use the existing username
+            'password': password
+        }})
 
-        return redirect(url_for('index'))
+        return redirect(url_for('signin'))
 
-    #user = users_collection.find_one({'username': username})
-    #return render_template('edit_user_own.html', user=user)
     return redirect(url_for('index'))
-
 
 @app.route('/delete_user/<string:username>', methods=['POST'])
 def delete_user(username):
@@ -163,8 +166,6 @@ def delete_user_own(username):
 def new_item():
     username = request.args.get('username')
     if not username:
-        # Handle the case where username is not provided
-        # You may redirect to the login page or display an error message
         pass
     
     if request.method == 'POST':
@@ -185,8 +186,6 @@ def new_item():
         # Redirect to the profile page after adding the item
         return redirect(url_for('profile'))
     
-
-
     return render_template('new_item.html', username=username)
 
 @app.route('/edit_item', methods=['GET', 'POST'])
@@ -194,11 +193,9 @@ def edit_item():
     username = request.args.get('username')
     
     if not username:
-        # Handle the case where username or item_id is not provided
-        # You may redirect to the login page or display an error message
         pass
     
-    products = products_collection.find()
+    products = products_collection.find({'owner': username})
     return render_template('edit_item.html', username=username, products=products)
 
 @app.route('/add_vehicle', methods=['POST'])
@@ -613,7 +610,10 @@ def display_vehicle(product_id):
     # You can use MongoDB to retrieve information about the product with the given product_id
     # Replace this with your actual logic
     user = users_collection.find_one({'username': session.get('username')})
-    is_admin = user.get('isAdmin', False)
+    if (user): 
+        is_admin = user.get('isAdmin', False)
+    else:
+        is_admin = False
     product = products_collection.find_one({'_id': ObjectId(product_id)})
     return render_template('display_vehicle.html', product = product, username = session.get('username'), is_admin = is_admin)
 
@@ -621,22 +621,37 @@ def display_vehicle(product_id):
 def display_computer(product_id):
     # Logic to fetch computer information from the database
     # Replace this with your actual logic
+    user = users_collection.find_one({'username': session.get('username')})
+    if (user): 
+        is_admin = user.get('isAdmin', False)
+    else:
+        is_admin = False
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_computer.html', product=product, username = session.get('username'))
+    return render_template('display_computer.html', product=product, username = session.get('username'), is_admin = is_admin)
 
 @app.route('/display_phone/<string:product_id>')
 def display_phone(product_id):
     # Logic to fetch phone information from the database
     # Replace this with your actual logic
+    user = users_collection.find_one({'username': session.get('username')})
+    if (user): 
+        is_admin = user.get('isAdmin', False)
+    else:
+        is_admin = False
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_phone.html', product=product, username = session.get('username'))
+    return render_template('display_phone.html', product=product, username = session.get('username'), is_admin = is_admin)
 
 @app.route('/display_private-lesson/<string:product_id>')
 def display_private_lesson(product_id):
     # Logic to fetch private lesson information from the database
     # Replace this with your actual logic
+    user = users_collection.find_one({'username': session.get('username')})
+    if (user): 
+        is_admin = user.get('isAdmin', False)
+    else:
+        is_admin = False
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_private_lesson.html', product=product, username = session.get('username'))
+    return render_template('display_private_lesson.html', product=product, username = session.get('username'), is_admin = is_admin)
 
 @app.route('/add_to_favorites/<string:product_id>', methods=['POST'])
 def add_to_favorites(product_id):
@@ -674,6 +689,31 @@ def activate_product(product_id):
 def deactivate_product(product_id):
     products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'isActivated': 'false'}})
     return redirect(url_for('profile'))
+
+@app.route('/rotate_edit/<string:user_id>', methods=['GET', 'POST'])
+def rotate_edit(user_id):
+    user = users_collection.find_one({'_id': ObjectId(user_id)})
+    return render_template('edit_user_own.html', user=user)
+
+@app.route('/rotate_vehicle/<string:product_id>', methods=['GET', 'POST'])
+def rotate_vehicle(product_id):
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('edit_vehicle.html', vehicle=product)
+
+@app.route('/rotate_computer/<string:product_id>', methods=['GET', 'POST'])
+def rotate_computer(product_id):
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('edit_computer.html', computer=product)
+
+@app.route('/rotate_phone/<string:product_id>', methods=['GET', 'POST'])
+def rotate_phone(product_id):
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('edit_phone.html', phone=product)
+
+@app.route('/rotate_private_lesson/<string:product_id>', methods=['GET', 'POST'])
+def rotate_private_lesson(product_id):
+    product = products_collection.find_one({'_id': ObjectId(product_id)})
+    return render_template('edit_private_lesson.html', private_lesson=product)
 
 if __name__ == '__main__':
     app.run(debug=True)
