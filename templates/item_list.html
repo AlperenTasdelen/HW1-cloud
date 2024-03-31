@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item List</title>
+    <!-- Add any necessary CSS or Bootstrap links here -->
+</head>
+<body>
+    <h1>Item List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Details</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product._id }}</td>
+                <td><a href="/display_{{ product.product_type }}/{{ product._id|string|urlencode }}">{{ product.title }}</a></td>
+                <td>
+                    <form method="post" action="{{ url_for('delete_product', product_id=product._id|string|urlencode) }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+                
+                <!-- Add more table data if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Add any necessary JavaScript scripts here -->
+</body>
+</html>

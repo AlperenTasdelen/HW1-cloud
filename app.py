@@ -764,5 +764,10 @@ def rotate_private_lesson(product_id):
     product = products_collection.find_one({'_id': ObjectId(product_id)})
     return render_template('edit_private_lesson.html', private_lesson=product)
 
+@app.route('/item_list', methods=['GET'])
+def item_list():
+    products = products_collection.find()
+    return render_template('item_list.html', products=products)
+
 if __name__ == '__main__':
     app.run(debug=True)

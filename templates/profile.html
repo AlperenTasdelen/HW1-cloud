@@ -38,5 +38,8 @@
     {% if user.isAdmin == true %}
         <a href="{{ url_for('user_list') }}">User List</a>
     {% endif %}
+    {% if user.isAdmin == true %}
+        <a href="{{ url_for('item_list') }}">Item List</a>
+    {% endif %}
 </body>
 </html>
