@@ -7,6 +7,7 @@ from datetime import datetime
 from pymongo import DESCENDING
 from flask import flash
 import smtplib
+from mongoengine import Document, StringField, IntField, BooleanField
 
 import json
 
@@ -241,6 +242,17 @@ def add_vehicle():
         else:
             isRegularAllowed = True
 
+        if(vehicle_type == 'Electric Car'):
+            battery_capacity = request.form['battery_capacity']
+            range = request.form['range']
+
+        if(vehicle_type == 'Caravan'):
+            bed_capacity = request.form['bed_capacity']
+            water_tank_capacity = request.form['water_tank_capacity']
+
+        if(vehicle_type == 'Truck'):
+            payload_capacity = request.form['payload_capacity']
+        
         # Prepare item data
         vehicle_data = {
             'owner': session.get('username'),
@@ -262,7 +274,12 @@ def add_vehicle():
             'isFeatured': False,
             'favoriteList': [],
             'isActivated': True,
-            'created_at': datetime.now()
+            'created_at': datetime.now(),
+            'battery_capacity': battery_capacity if vehicle_type == 'Electric Car' else '',
+            'range': range if vehicle_type == 'Electric Car' else '',
+            'bed_capacity': bed_capacity if vehicle_type == 'Caravan' else '',
+            'water_tank_capacity': water_tank_capacity if vehicle_type == 'Caravan' else '',
+            'payload_capacity': payload_capacity if vehicle_type == 'Truck' else ''
         }
         
         # Insert item into MongoDB

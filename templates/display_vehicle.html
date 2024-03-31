@@ -24,9 +24,21 @@
     <p>Fuel Type: {{ product.fuel_type }}</p>
     <p>Transmission Type: {{ product.transmission_type }}</p>
     <p>Mileage: {{ product.mileage }}</p>
+    {% if product.type == "Electric Car" %}
+        <p>Battery Capacity: {{ product.battery_capacity }}</p>
+        <p>Range: {{ product.range }}</p>
+    {% endif %}
+    {% if product.type == "Caravan" %}
+        <p>Bed Capacity: {{ product.bed_capacity }} </p>
+        <p>Water Tank Capacity: {{ product.water_tank_capacity }}</p>
+    {% endif %}
+    {% if product.type == "Truck" %}
+        <p>Payload Capacity: {{ product.payload_capacity }}</p>
+    {% endif %}
     <p>Price: {{ product.price }}</p>
     <p>Image: {{ product.image }}</p>
     <p>Description: {{ product.description }}</p>
+    
     {% if username and username not in product.favoriteList%}
         <form action="/add_to_favorites/{{ product._id|string|urlencode }}" method="POST">
             <input type="hidden" name="product_id" value="{{ product._id }}">

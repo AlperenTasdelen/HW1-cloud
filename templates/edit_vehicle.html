@@ -53,6 +53,24 @@
         <input type="checkbox" id="visible_vehicle" name="visible_vehicle" {% if vehicle.isRegularAllowed %} checked {% endif %}><br><br>
 
         <!-- Adjust the form action to include vehicle_id -->
+
+        <!-- Specific fields for Electric Cars -->
+        <label for="battery_capacity">Battery Capacity:</label><br>
+        <input type="text" id="battery_capacity" name="battery_capacity" value= "{{ vehicle.battery_capacity }}" ><br>
+        
+        <label for="range">Range:</label><br>
+        <input type="number" id="range" name="range" value="{{ vehicle.range }}"><br>
+        
+        <!-- Specific fields for Caravans -->
+        <label for="bed_capacity">Bed Capacity:</label><br>
+        <input type="number" id="bed_capacity" name="bed_capacity" value="{{ vehicle.bed_capacity }}"><br>
+        
+        <label for="water_tank_capacity">Water Tank Capacity:</label><br>
+        <input type="number" id="water_tank_capacity" name="water_tank_capacity" value="{{ vehicle.water_tank_capacity }}"><br>
+        
+        <!-- Specific fields for Trucks -->
+        <label for="payload_capacity">Payload Capacity:</label><br>
+        <input type="number" id="payload_capacity" name="payload_capacity" value="{{ vehicle.payload_capacity }}"><br>
         <button type="submit">Submit</button>
     </form>
 </body>
