@@ -3,6 +3,11 @@ from flask_pymongo import PyMongo
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from bson import ObjectId
+from datetime import datetime
+from pymongo import DESCENDING
+from flask import flash
+import smtplib
+
 import json
 
 app = Flask(__name__)
@@ -31,13 +36,13 @@ def logout():
 def profile():
     username = session.get('username')
     if not username:
-        #return redirect(url_for('login'))
+        flash('You must be logged in to view your profile', 'error')
         return render_template('signin.html')
     
     user = users_collection.find_one({'username': username})
     products = products_collection.find()
     products2 = products_collection.find()
-    return render_template('profile.html', user=user, products=products, products2=products2)
+    return render_template('profile.html', user=user, products=products, products2=products2, username = session.get('username'))
 
 @app.route('/signin')
 def signin():
@@ -51,14 +56,26 @@ def register():
         # Once registered, you may redirect the user to another page (e.g., the sign-in page)
         # Process form submission
         username = request.form['username']
+        email = request.form['email']
+        phone = request.form['phone']
         password = request.form['password']
         # Add user to the users array
-        if users_collection.find_one({'$or': [{'username': username}, {'password': password}]}):
+
+        if not email.endswith('@ceng.metu.edu.tr'):
+            flash('Email must be in the format example@ceng.metu.edu.tr', 'error')
+            return redirect(url_for('register'))
+
+        if users_collection.find_one({'$or': [{'email': email}]}):
+            flash('Email already exists, please use a different email', 'error')
             return redirect(url_for('register'))
         
+        #TODO: send email to user for verification
+
         user_data = {
             'username': username,
             'password': password,
+            'email': email,
+            'phone': phone,
             'isAdmin': False
         }
 
@@ -71,22 +88,19 @@ def register():
 
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form['username']
+    email = request.form['email']
     password = request.form['password']
-    user = users_collection.find_one({'username': username, 'password': password})
+    user = users_collection.find_one({'email': email, 'password': password})
     if user:
         # User found, redirect to homepage or dashboard
-        session['username'] = username
+        session['username'] = user['username']
         return redirect(url_for('index'))
     else:
-        # User not found or incorrect password, redirect back to sign-in page
+        flash('Invalid email or password', 'error')
         return redirect(url_for('signin'))
 
 @app.route('/')
 def index():
-    #products = products_collection.find({isFeatured: True})
-    #products = products_collection.find()
-
     username = session.get('username')
     session['username'] = username
     return render_template('index.html')
@@ -100,7 +114,7 @@ def products():
         if category != 'all':
             query['product_type'] = category
 
-    products = products_collection.find(query)
+    products = products_collection.find(query).sort('created_at', DESCENDING)
     return render_template('products.html', products=products, username = session.get('username'))
 
 @app.route('/user_list')
@@ -119,11 +133,13 @@ def edit_user(user_id):
         # Retrieve form data
         user = users_collection.find_one({'_id': ObjectId(user_id)})
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
 
         # Update user data
         users_collection.update_one({'username': username}, {'$set': {
-            'username': username,  # Update username if necessary, otherwise use the existing username
+            'username': username,
+            'email': email,
             'password': password
         }})
 
@@ -138,11 +154,13 @@ def edit_user_own(user_id):
         # Retrieve form data
         # user = users_collection.find_one({'_id': ObjectId(user_id)})
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
 
         # Update user data
         users_collection.update_one({'_id': ObjectId(user_id)}, {'$set': {
-            'username': username,  # Update username if necessary, otherwise use the existing username
+            'username': username,
+            'email': email,
             'password': password
         }})
 
@@ -243,7 +261,8 @@ def add_vehicle():
             'isRegularAllowed': isRegularAllowed,
             'isFeatured': False,
             'favoriteList': [],
-            'isActivated': True
+            'isActivated': True,
+            'created_at': datetime.now()
         }
         
         # Insert item into MongoDB
@@ -297,7 +316,8 @@ def add_computer():
             'isRegularAllowed': isRegularAllowed,
             'isFeatured': False,
             'favoriteList': [],
-            'isActivated': True
+            'isActivated': True,
+            'created_at': datetime.now()
         }
 
         # Insert item into MongoDB
@@ -351,7 +371,8 @@ def add_phone():
             'isRegularAllowed': isRegularAllowed,
             'isFeatured': False,
             'favoriteList': [],
-            'isActivated': True
+            'isActivated': True,
+            'created_at': datetime.now()
         }
 
         # Insert item into MongoDB
@@ -395,7 +416,8 @@ def add_private_lesson():
             'isRegularAllowed': isRegularAllowed,
             'isFeatured': False,
             'favoriteList': [],
-            'isActivated': True
+            'isActivated': True,
+            'created_at': datetime.now()
         }
 
         # Insert item into MongoDB
@@ -460,6 +482,9 @@ def edit_vehicle(product_id):
         else:
             isRegularAllowed = True
         
+        old_vehicle = products_collection.find_one({'_id': ObjectId(product_id)})
+        old_price = old_vehicle.get('price', 0)
+
         products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
             'title': title,
             'type': vehicle_type,
@@ -477,6 +502,9 @@ def edit_vehicle(product_id):
             'isRegularAllowed': isRegularAllowed
         }})
 
+        if(price < old_price):
+            favoriteList = products_collection.find_one({'_id': ObjectId(product_id)}).get('favoriteList', [])
+            #TODO: Send email to users in favoriteList
         return redirect(url_for('profile'))
     
     vehicle = products_collection.find_one({'_id': ObjectId(product_id)})
@@ -615,7 +643,8 @@ def display_vehicle(product_id):
     else:
         is_admin = False
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_vehicle.html', product = product, username = session.get('username'), is_admin = is_admin)
+    owner = users_collection.find_one({'username': product.get('owner')})
+    return render_template('display_vehicle.html', product = product, username = session.get('username'), is_admin = is_admin, owner = owner)
 
 @app.route('/display_computer/<string:product_id>')
 def display_computer(product_id):
@@ -627,7 +656,8 @@ def display_computer(product_id):
     else:
         is_admin = False
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_computer.html', product=product, username = session.get('username'), is_admin = is_admin)
+    owner = users_collection.find_one({'username': product.get('owner')})
+    return render_template('display_computer.html', product=product, username = session.get('username'), is_admin = is_admin, owner = owner)
 
 @app.route('/display_phone/<string:product_id>')
 def display_phone(product_id):
@@ -639,7 +669,8 @@ def display_phone(product_id):
     else:
         is_admin = False
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_phone.html', product=product, username = session.get('username'), is_admin = is_admin)
+    owner = users_collection.find_one({'username': product.get('owner')})
+    return render_template('display_phone.html', product=product, username = session.get('username'), is_admin = is_admin, owner = owner)
 
 @app.route('/display_private-lesson/<string:product_id>')
 def display_private_lesson(product_id):
@@ -651,7 +682,8 @@ def display_private_lesson(product_id):
     else:
         is_admin = False
     product = products_collection.find_one({'_id': ObjectId(product_id)})
-    return render_template('display_private_lesson.html', product=product, username = session.get('username'), is_admin = is_admin)
+    owner = users_collection.find_one({'username': product.get('owner')})
+    return render_template('display_private_lesson.html', product=product, username = session.get('username'), is_admin = is_admin, owner = owner) 
 
 @app.route('/add_to_favorites/<string:product_id>', methods=['POST'])
 def add_to_favorites(product_id):
@@ -682,12 +714,12 @@ def delete_product(product_id):
 
 @app.route('/activate_product/<string:product_id>', methods=['POST'])
 def activate_product(product_id):
-    products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'isActivated': 'true'}})
+    products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'isActivated': True}})
     return redirect(url_for('profile'))
 
 @app.route('/deactivate_product/<string:product_id>', methods=['POST'])
 def deactivate_product(product_id):
-    products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'isActivated': 'false'}})
+    products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {'isActivated': False}})
     return redirect(url_for('profile'))
 
 @app.route('/rotate_edit/<string:user_id>', methods=['GET', 'POST'])

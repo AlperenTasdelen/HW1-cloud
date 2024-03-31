@@ -12,7 +12,7 @@
     <a href="/">Home</a>
     <ul>
         {% for product in products %}
-            {% if product.isActivated == true and (username or product.isRegularAllowed == true) %}
+            {% if product.isActivated == true %}
                 <li>
                     <a href="/display_{{ product.product_type }}/{{ product._id|string|urlencode }}">{{ product.title }}</a>
                 </li>

@@ -8,6 +8,13 @@
 <body>
     <h1>Details of {{ product.title }}</h1>
     <p>ID: {{ product._id }}</p>
+    <p>Owner: {{ product.owner }}</p>
+    {% if username or product.isRegularAllowed == true%}
+        <p>Email: {{ owner.email }}</p>
+    {% endif %}
+    {% if username or product.isRegularAllowed == true%}
+        <p>Phone: {{ owner.phone }}</p>
+    {% endif %}
     <p>Brand: {{ product.brand }}</p>
     <p>Model: {{ product.model }}</p>
     <p>Year: {{ product.year }}</p>
@@ -44,13 +51,13 @@
             <button type="submit">Delete Product</button>
         </form>
     {% endif %}
-    {% if username and product.isActivated == false %}
+    {% if username == product.owner and product.isActivated == false %}
         <form action="/activate_product/{{ product._id|string|urlencode }}" method="POST">
             <input type="hidden" name="product_id" value="{{ product._id }}">
             <button type="submit">Activate Product</button>
         </form>
     {% endif %}
-    {% if username and product.isActivated == true %}
+    {% if username == product.owner and product.isActivated == true %}
         <form action="/deactivate_product/{{ product._id|string|urlencode }}" method="POST">
             <input type="hidden" name="product_id" value="{{ product._id }}">
             <button type="submit">Deactivate Product</button>
