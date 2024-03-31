@@ -12,6 +12,4 @@ psycopg2-binary==2.9.9
 Werkzeug==3.0.1
 zipp==3.18.0
 flask_pymongo==2.3.0
-flash==0.1.0
 mongoengine==0.24.2
-smtplib==0.1.0

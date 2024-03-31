@@ -18,3 +18,15 @@ used due to styling and interactivity opportunities.
 User Authentication: Basic username, password and e-mail
 authentication is provided for registeration.
 
+URL: https://hw1-cloud.onrender.com
+
+Login instructions:
+
+Admin Login:
+Email: alperen.tasdelen@metu.edu.tr
+Password: admin
+
+User Login
+Email: (your-cengmail) (only cengmails allowed for registeration)
+Password: (your password)
+
