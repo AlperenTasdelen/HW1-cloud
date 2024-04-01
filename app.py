@@ -108,7 +108,8 @@ def verify(username, password, email, phone, verification_code):
                 'isAdmin': False
             }
             users_collection.insert_one(user_data)
-            return redirect(url_for('signin'))
+            session['username'] = username
+            return redirect(url_for('index'))
         else:
             flash('Invalid verification code', 'error')
             return redirect(url_for('register'))
