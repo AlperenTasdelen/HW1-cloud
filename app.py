@@ -132,7 +132,7 @@ def login():
 def index():
     # username = session.get('username')
     # session['username'] = username
-    return render_template('index.html')
+    return render_template('index.html', username = session.get('username'))
 
 @app.route('/products')
 def products():
