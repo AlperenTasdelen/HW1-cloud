@@ -10,7 +10,9 @@
     <ul>
         {% for product in products %}
             <li>
-                <a href="/rotate_{{ product.product_type }}/{{ product._id|string|urlencode }}">{{ product.title }}</a>
+                <form action="/rotate_{{ product.product_type }}/{{ product._id|string|urlencode }}" method="get">
+                    <button type="submit">{{ product.title }}</button>
+                </form>
             </li>
         {% endfor %}
     </ul>
