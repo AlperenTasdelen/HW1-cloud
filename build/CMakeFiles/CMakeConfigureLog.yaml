@@ -849,3 +849,425 @@ events:
         
       exitCode: 2
 ...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/Program Files/Microchip/xc16/v2.10/bin/xc16-gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      Assembler messages:
+      Warning: Using default target divide cycle count of 17; please specify device.
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        C:/Users/waral/OneDrive/Masaüstü/HW1-cloud/build/CMakeFiles/3.26.4-msvc4/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: C:/cygwin64/bin/c++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+      
+      The CXX compiler identification is GNU, found in:
+        C:/Users/waral/OneDrive/Masaüstü/HW1-cloud/build/CMakeFiles/3.26.4-msvc4/CompilerIdCXX/a.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/waral/OneDrive/Masa\u00fcst\u00fc/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-sxhcai"
+      binary: "C:/Users/waral/OneDrive/Masa\u00fcst\u00fc/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-sxhcai"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/waral/OneDrive/Masaüstü/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-sxhcai
+        
+        Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe -E env VERBOSE=1 C:/msys64/usr/bin/make.exe -f Makefile cmTC_1680e/fast && /usr/bin/make  -f CMakeFiles/cmTC_1680e.dir/build.make CMakeFiles/cmTC_1680e.dir/build
+        make[1]: Entering directory '/c/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-sxhcai'
+        Building C object CMakeFiles/cmTC_1680e.dir/CMakeCCompilerABI.c.obj
+        "C:/Program Files/Microchip/xc16/v2.10/bin/xc16-gcc.exe"   -v -o CMakeFiles/cmTC_1680e.dir/CMakeCCompilerABI.c.obj -c "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeCCompilerABI.c"
+        Using built-in specs.
+        COLLECT_GCC=C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-gcc.exe
+        Target: pic30-elf
+        Configured with: /home/xc16/release-builds/build_20230327/src/XC_GCC/gcc/configure --host=x86_64-w64-mingw32 --build=x86_64-linux --target=pic30-elf --disable-lto --disable-threads --disable-libmudflap --disable-libssp --disable-libstdcxx-pch --disable-hosted-libstdcxx --with-gnu-as --with-gnu-ld --enable-languages=c --disable-nls --disable-libgomp --without-headers --disable-libffi --disable-bootstrap --prefix=/bin --libexecdir=/bin --program-prefix=pic30- --with-libelf=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs/ --with-dwarf2 --with-gmp=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs --with-ppl=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs --with-cloog=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs --with-zlib=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs --with-bugurl=https://www.microchip.com/technical-support --with-host-libstdcxx=
+        Thread model: single
+        gcc version 4.5.1 (XC16, Microchip v2.10) Build date: Mar 27 2023 (Microchip Technology) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1680e.dir/CMakeCCompilerABI.c.obj' '-c'
+         c:/program files/microchip/xc16/v2.10/bin/bin/../xc16-cc1.exe -quiet -v -iprefix c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/ C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeCCompilerABI.c -mresource=c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../c30_device.info -omf=elf -quiet -dumpbase CMakeCCompilerABI.c -auxbase-strip CMakeFiles/cmTC_1680e.dir/CMakeCCompilerABI.c.obj -version -o C:\\Users\\waral\\AppData\\Local\\Temp\\cclY5B7t.00007648.s
+        GNU C (Microchip Technology) version 4.5.1 (XC16, Microchip v2.10) Build date: Mar 27 2023 (pic30-elf)
+        	compiled by GNU C version 7.3-win32 20180312, GMP version 4.3.2, MPFR version 2.4.2, MPC version 0.8.1
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/include"
+        ignoring nonexistent directory "c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/include-fixed"
+        ignoring nonexistent directory "c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/../../../../pic30-elf/sys-include"
+        ignoring nonexistent directory "c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/../../../../pic30-elf/include"
+        ignoring nonexistent directory "/bin/lib/gcc/pic30-elf/4.5.1/include"
+        ignoring nonexistent directory "/bin/lib/gcc/pic30-elf/4.5.1/include-fixed"
+        ignoring nonexistent directory "/bin/pic30-elf/sys-include"
+        ignoring nonexistent directory "/bin/pic30-elf/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../..\\include
+         c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../..\\support\\generic\\h
+        End of search list.
+        GNU C (Microchip Technology) version 4.5.1 (XC16, Microchip v2.10) Build date: Mar 27 2023 (pic30-elf)
+        	compiled by GNU C version 7.3-win32 20180312, GMP version 4.3.2, MPFR version 2.4.2, MPC version 0.8.1
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: f9d73e42373dea784c284f0762b9c3af
+        Microchip Language Tool Shell Version 2.10 (Build date: Mar 27 2023).
+        Copyright (c) 2012-2017 Microchip Technology Inc. All rights reserved
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1680e.dir/CMakeCCompilerABI.c.obj' '-c'
+         c:/program files/microchip/xc16/v2.10/bin/bin/../xc16-as.exe -v --relax -omf=elf -o CMakeFiles/cmTC_1680e.dir/CMakeCCompilerABI.c.obj C:\\Users\\waral\\AppData\\Local\\Temp\\cclY5B7t.00007648.s
+        GNU assembler version 2.14 - Microchip 2.10 (A) Build date: Mar-27-2023(pic30-elf) using BFD version 2.14 20030612
+        Assembler messages:
+        Warning: Using default target divide cycle count of 17; please specify device.
+        Microchip Language Tool Shell Version 2.10 (Build date: Mar 27 2023).
+        Copyright (c) 2012-2017 Microchip Technology Inc. All rights reserved
+        PIC30_COMPILER_PATH=c:/program files/microchip/xc16/v2.10/bin/bin/../
+        PIC30_LIBRARY_PATH=c:/program files/microchip/xc16/v2.10/bin/bin/../;c:/program files/microchip/xc16/v2.10/bin/bin/../../lib/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/PIC24E/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/PIC24F/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/PIC24H/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/dsPIC30F/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/dsPIC33C/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/dsPIC33E/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/dsPIC33F/gld/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1680e.dir/CMakeCCompilerABI.c.obj' '-c'
+        Microchip Language Tool Shell Version 2.10 (Build date: Mar 27 2023).
+        Copyright (c) 2012-2017 Microchip Technology Inc. All rights reserved
+        Linking C executable cmTC_1680e.exe
+        "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" -E rm -f CMakeFiles/cmTC_1680e.dir/objects.a
+        "C:/Program Files/Microchip/xc16/v2.10/bin/xc16-ar.exe" qc CMakeFiles/cmTC_1680e.dir/objects.a @CMakeFiles/cmTC_1680e.dir/objects1.rsp
+        C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe: illegal option -- @
+        Usage: C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe [emulation options] [-]{dmpqrstx}[abcfilNoPsSuvV] [member-name] [count] archive-file file...
+               C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe -M [<mri-script]
+         commands:
+          d            - delete file(s) from the archive
+          m[ab]        - move file(s) in the archive
+          p            - print file(s) found in the archive
+          q[f]         - quick append file(s) to the archive
+          r[ab][f][u]  - replace existing or insert new file(s) into the archive
+          t            - display contents of archive
+          x[o]         - extract file(s) from the archive
+         command specific modifiers:
+          [a]          - put file(s) after [member-name]
+          [b]          - put file(s) before [member-name] (same as [i])
+          [N]          - use instance [count] of name
+          [f]          - truncate inserted file names
+          [P]          - use full path names when matching
+          [o]          - preserve original dates
+          [u]          - only replace files that are newer than current archive contents
+         generic modifiers:
+          [c]          - do not warn if the library had to be created
+          [s]          - create an archive index (cf. ranlib)
+          [S]          - do not build a symbol table
+          [v]          - be verbose
+          [V]          - display the version number
+         emulation options: 
+          No emulation specific options
+        C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe: supported targets: elf32-pic30 binary ihex
+        make[1]: *** [CMakeFiles/cmTC_1680e.dir/build.make:100: cmTC_1680e.exe] Error 255
+        make[1]: Leaving directory '/c/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-sxhcai'
+        make: *** [Makefile:127: cmTC_1680e/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:56 (try_compile)"
+      - "CMakeLists.txt"
+    checks:
+      - "Check for working C compiler: C:/Program Files/Microchip/xc16/v2.10/bin/xc16-gcc.exe"
+    directories:
+      source: "C:/Users/waral/OneDrive/Masa\u00fcst\u00fc/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-w1juzp"
+      binary: "C:/Users/waral/OneDrive/Masa\u00fcst\u00fc/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-w1juzp"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/waral/OneDrive/Masaüstü/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-w1juzp
+        
+        Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe -E env VERBOSE=1 C:/msys64/usr/bin/make.exe -f Makefile cmTC_9b9d1/fast && /usr/bin/make  -f CMakeFiles/cmTC_9b9d1.dir/build.make CMakeFiles/cmTC_9b9d1.dir/build
+        make[1]: Entering directory '/c/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-w1juzp'
+        Building C object CMakeFiles/cmTC_9b9d1.dir/testCCompiler.c.obj
+        "C:/Program Files/Microchip/xc16/v2.10/bin/xc16-gcc.exe"    -o CMakeFiles/cmTC_9b9d1.dir/testCCompiler.c.obj -c C:/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-w1juzp/testCCompiler.c
+        Assembler messages:
+        Warning: Using default target divide cycle count of 17; please specify device.
+        Linking C executable cmTC_9b9d1.exe
+        "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" -E rm -f CMakeFiles/cmTC_9b9d1.dir/objects.a
+        "C:/Program Files/Microchip/xc16/v2.10/bin/xc16-ar.exe" qc CMakeFiles/cmTC_9b9d1.dir/objects.a @CMakeFiles/cmTC_9b9d1.dir/objects1.rsp
+        C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe: illegal option -- @
+        Usage: C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe [emulation options] [-]{dmpqrstx}[abcfilNoPsSuvV] [member-name] [count] archive-file file...
+               C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe -M [<mri-script]
+         commands:
+          d            - delete file(s) from the archive
+          m[ab]        - move file(s) in the archive
+          p            - print file(s) found in the archive
+          q[f]         - quick append file(s) to the archive
+          r[ab][f][u]  - replace existing or insert new file(s) into the archive
+          t            - display contents of archive
+          x[o]         - extract file(s) from the archive
+         command specific modifiers:
+          [a]          - put file(s) after [member-name]
+          [b]          - put file(s) before [member-name] (same as [i])
+          [N]          - use instance [count] of name
+          [f]          - truncate inserted file names
+          [P]          - use full path names when matching
+          [o]          - preserve original dates
+          [u]          - only replace files that are newer than current archive contents
+         generic modifiers:
+          [c]          - do not warn if the library had to be created
+          [s]          - create an archive index (cf. ranlib)
+          [S]          - do not build a symbol table
+          [v]          - be verbose
+          [V]          - display the version number
+         emulation options: 
+          No emulation specific options
+        C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe: supported targets: elf32-pic30 binary ihex
+        make[1]: *** [CMakeFiles/cmTC_9b9d1.dir/build.make:101: cmTC_9b9d1.exe] Error 255
+        make[1]: Leaving directory '/c/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-w1juzp'
+        make: *** [Makefile:127: cmTC_9b9d1/fast] Error 2
+        
+      exitCode: 2
+...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/Program Files/Microchip/xc16/v2.10/bin/xc16-gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      Assembler messages:
+      Warning: Using default target divide cycle count of 17; please specify device.
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        C:/Users/waral/OneDrive/Masaüstü/HW1-cloud/build/CMakeFiles/3.26.4-msvc4/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: C:/cygwin64/bin/c++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+      
+      The CXX compiler identification is GNU, found in:
+        C:/Users/waral/OneDrive/Masaüstü/HW1-cloud/build/CMakeFiles/3.26.4-msvc4/CompilerIdCXX/a.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/waral/OneDrive/Masa\u00fcst\u00fc/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-ykns8o"
+      binary: "C:/Users/waral/OneDrive/Masa\u00fcst\u00fc/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-ykns8o"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/waral/OneDrive/Masaüstü/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-ykns8o
+        
+        Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe -E env VERBOSE=1 C:/msys64/usr/bin/make.exe -f Makefile cmTC_583e0/fast && /usr/bin/make  -f CMakeFiles/cmTC_583e0.dir/build.make CMakeFiles/cmTC_583e0.dir/build
+        make[1]: Entering directory '/c/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-ykns8o'
+        Building C object CMakeFiles/cmTC_583e0.dir/CMakeCCompilerABI.c.obj
+        "C:/Program Files/Microchip/xc16/v2.10/bin/xc16-gcc.exe"   -v -o CMakeFiles/cmTC_583e0.dir/CMakeCCompilerABI.c.obj -c "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeCCompilerABI.c"
+        Using built-in specs.
+        COLLECT_GCC=C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-gcc.exe
+        Target: pic30-elf
+        Configured with: /home/xc16/release-builds/build_20230327/src/XC_GCC/gcc/configure --host=x86_64-w64-mingw32 --build=x86_64-linux --target=pic30-elf --disable-lto --disable-threads --disable-libmudflap --disable-libssp --disable-libstdcxx-pch --disable-hosted-libstdcxx --with-gnu-as --with-gnu-ld --enable-languages=c --disable-nls --disable-libgomp --without-headers --disable-libffi --disable-bootstrap --prefix=/bin --libexecdir=/bin --program-prefix=pic30- --with-libelf=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs/ --with-dwarf2 --with-gmp=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs --with-ppl=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs --with-cloog=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs --with-zlib=/home/xc16/release-builds/build_20230327/bin/XC_GCC-elf-mingw64-xclm/host-libs --with-bugurl=https://www.microchip.com/technical-support --with-host-libstdcxx=
+        Thread model: single
+        gcc version 4.5.1 (XC16, Microchip v2.10) Build date: Mar 27 2023 (Microchip Technology) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_583e0.dir/CMakeCCompilerABI.c.obj' '-c'
+         c:/program files/microchip/xc16/v2.10/bin/bin/../xc16-cc1.exe -quiet -v -iprefix c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/ C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeCCompilerABI.c -mresource=c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../c30_device.info -omf=elf -quiet -dumpbase CMakeCCompilerABI.c -auxbase-strip CMakeFiles/cmTC_583e0.dir/CMakeCCompilerABI.c.obj -version -o C:\\Users\\waral\\AppData\\Local\\Temp\\ccmJfqX0.00004864.s
+        GNU C (Microchip Technology) version 4.5.1 (XC16, Microchip v2.10) Build date: Mar 27 2023 (pic30-elf)
+        	compiled by GNU C version 7.3-win32 20180312, GMP version 4.3.2, MPFR version 2.4.2, MPC version 0.8.1
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/include"
+        ignoring nonexistent directory "c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/include-fixed"
+        ignoring nonexistent directory "c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/../../../../pic30-elf/sys-include"
+        ignoring nonexistent directory "c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../pic30-elf/4.5.1/../../../../pic30-elf/include"
+        ignoring nonexistent directory "/bin/lib/gcc/pic30-elf/4.5.1/include"
+        ignoring nonexistent directory "/bin/lib/gcc/pic30-elf/4.5.1/include-fixed"
+        ignoring nonexistent directory "/bin/pic30-elf/sys-include"
+        ignoring nonexistent directory "/bin/pic30-elf/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../..\\include
+         c:\\program files\\microchip\\xc16\\v2.10\\bin\\bin\\../..\\support\\generic\\h
+        End of search list.
+        GNU C (Microchip Technology) version 4.5.1 (XC16, Microchip v2.10) Build date: Mar 27 2023 (pic30-elf)
+        	compiled by GNU C version 7.3-win32 20180312, GMP version 4.3.2, MPFR version 2.4.2, MPC version 0.8.1
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: f9d73e42373dea784c284f0762b9c3af
+        Microchip Language Tool Shell Version 2.10 (Build date: Mar 27 2023).
+        Copyright (c) 2012-2017 Microchip Technology Inc. All rights reserved
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_583e0.dir/CMakeCCompilerABI.c.obj' '-c'
+         c:/program files/microchip/xc16/v2.10/bin/bin/../xc16-as.exe -v --relax -omf=elf -o CMakeFiles/cmTC_583e0.dir/CMakeCCompilerABI.c.obj C:\\Users\\waral\\AppData\\Local\\Temp\\ccmJfqX0.00004864.s
+        GNU assembler version 2.14 - Microchip 2.10 (A) Build date: Mar-27-2023(pic30-elf) using BFD version 2.14 20030612
+        Assembler messages:
+        Warning: Using default target divide cycle count of 17; please specify device.
+        Microchip Language Tool Shell Version 2.10 (Build date: Mar 27 2023).
+        Copyright (c) 2012-2017 Microchip Technology Inc. All rights reserved
+        PIC30_COMPILER_PATH=c:/program files/microchip/xc16/v2.10/bin/bin/../
+        PIC30_LIBRARY_PATH=c:/program files/microchip/xc16/v2.10/bin/bin/../;c:/program files/microchip/xc16/v2.10/bin/bin/../../lib/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/PIC24E/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/PIC24F/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/PIC24H/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/dsPIC30F/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/dsPIC33C/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/dsPIC33E/gld/;c:/program files/microchip/xc16/v2.10/bin/bin/../../support/dsPIC33F/gld/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_583e0.dir/CMakeCCompilerABI.c.obj' '-c'
+        Microchip Language Tool Shell Version 2.10 (Build date: Mar 27 2023).
+        Copyright (c) 2012-2017 Microchip Technology Inc. All rights reserved
+        Linking C executable cmTC_583e0.exe
+        "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" -E rm -f CMakeFiles/cmTC_583e0.dir/objects.a
+        "C:/Program Files/Microchip/xc16/v2.10/bin/xc16-ar.exe" qc CMakeFiles/cmTC_583e0.dir/objects.a @CMakeFiles/cmTC_583e0.dir/objects1.rsp
+        C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe: illegal option -- @
+        Usage: C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe [emulation options] [-]{dmpqrstx}[abcfilNoPsSuvV] [member-name] [count] archive-file file...
+               C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe -M [<mri-script]
+         commands:
+          d            - delete file(s) from the archive
+          m[ab]        - move file(s) in the archive
+          p            - print file(s) found in the archive
+          q[f]         - quick append file(s) to the archive
+          r[ab][f][u]  - replace existing or insert new file(s) into the archive
+          t            - display contents of archive
+          x[o]         - extract file(s) from the archive
+         command specific modifiers:
+          [a]          - put file(s) after [member-name]
+          [b]          - put file(s) before [member-name] (same as [i])
+          [N]          - use instance [count] of name
+          [f]          - truncate inserted file names
+          [P]          - use full path names when matching
+          [o]          - preserve original dates
+          [u]          - only replace files that are newer than current archive contents
+         generic modifiers:
+          [c]          - do not warn if the library had to be created
+          [s]          - create an archive index (cf. ranlib)
+          [S]          - do not build a symbol table
+          [v]          - be verbose
+          [V]          - display the version number
+         emulation options: 
+          No emulation specific options
+        C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe: supported targets: elf32-pic30 binary ihex
+        make[1]: *** [CMakeFiles/cmTC_583e0.dir/build.make:100: cmTC_583e0.exe] Error 255
+        make[1]: Leaving directory '/c/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-ykns8o'
+        make: *** [Makefile:127: cmTC_583e0/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:56 (try_compile)"
+      - "CMakeLists.txt"
+    checks:
+      - "Check for working C compiler: C:/Program Files/Microchip/xc16/v2.10/bin/xc16-gcc.exe"
+    directories:
+      source: "C:/Users/waral/OneDrive/Masa\u00fcst\u00fc/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-dabsjh"
+      binary: "C:/Users/waral/OneDrive/Masa\u00fcst\u00fc/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-dabsjh"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/waral/OneDrive/Masaüstü/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-dabsjh
+        
+        Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe -E env VERBOSE=1 C:/msys64/usr/bin/make.exe -f Makefile cmTC_85929/fast && /usr/bin/make  -f CMakeFiles/cmTC_85929.dir/build.make CMakeFiles/cmTC_85929.dir/build
+        make[1]: Entering directory '/c/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-dabsjh'
+        Building C object CMakeFiles/cmTC_85929.dir/testCCompiler.c.obj
+        "C:/Program Files/Microchip/xc16/v2.10/bin/xc16-gcc.exe"    -o CMakeFiles/cmTC_85929.dir/testCCompiler.c.obj -c C:/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-dabsjh/testCCompiler.c
+        Assembler messages:
+        Warning: Using default target divide cycle count of 17; please specify device.
+        Linking C executable cmTC_85929.exe
+        "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" -E rm -f CMakeFiles/cmTC_85929.dir/objects.a
+        "C:/Program Files/Microchip/xc16/v2.10/bin/xc16-ar.exe" qc CMakeFiles/cmTC_85929.dir/objects.a @CMakeFiles/cmTC_85929.dir/objects1.rsp
+        C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe: illegal option -- @
+        Usage: C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe [emulation options] [-]{dmpqrstx}[abcfilNoPsSuvV] [member-name] [count] archive-file file...
+               C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe -M [<mri-script]
+         commands:
+          d            - delete file(s) from the archive
+          m[ab]        - move file(s) in the archive
+          p            - print file(s) found in the archive
+          q[f]         - quick append file(s) to the archive
+          r[ab][f][u]  - replace existing or insert new file(s) into the archive
+          t            - display contents of archive
+          x[o]         - extract file(s) from the archive
+         command specific modifiers:
+          [a]          - put file(s) after [member-name]
+          [b]          - put file(s) before [member-name] (same as [i])
+          [N]          - use instance [count] of name
+          [f]          - truncate inserted file names
+          [P]          - use full path names when matching
+          [o]          - preserve original dates
+          [u]          - only replace files that are newer than current archive contents
+         generic modifiers:
+          [c]          - do not warn if the library had to be created
+          [s]          - create an archive index (cf. ranlib)
+          [S]          - do not build a symbol table
+          [v]          - be verbose
+          [V]          - display the version number
+         emulation options: 
+          No emulation specific options
+        C:\\Program Files\\Microchip\\xc16\\v2.10\\bin\\bin/elf-ar.exe: supported targets: elf32-pic30 binary ihex
+        make[1]: *** [CMakeFiles/cmTC_85929.dir/build.make:101: cmTC_85929.exe] Error 255
+        make[1]: Leaving directory '/c/Users/waral/OneDrive/Masa├╝st├╝/HW1-cloud/build/CMakeFiles/CMakeScratch/TryCompile-dabsjh'
+        make: *** [Makefile:127: cmTC_85929/fast] Error 2
+        
+      exitCode: 2
+...
