@@ -91,7 +91,7 @@ def register():
         except Exception as e:
             print(e)
 
-        return render_template('verification.html',username=username, password=password, phone=phone, email=email, verification_code=verification_code, methods = ['POST'])
+        return render_template('verification.html',username=username, password=password, phone=phone, email=email, verification_code=verification_code)
         # return redirect(url_for('verify', email=email, verification_code=verification_code))
     return render_template('register.html')
 
