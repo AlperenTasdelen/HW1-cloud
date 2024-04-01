@@ -7,7 +7,9 @@ from datetime import datetime
 from pymongo import DESCENDING
 from flask import flash
 import smtplib
-from mongoengine import Document, StringField, IntField, BooleanField
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import random
 
 import json
 
@@ -72,20 +74,45 @@ def register():
         
         #TODO: send email to user for verification
 
-        user_data = {
-            'username': username,
-            'password': password,
-            'email': email,
-            'phone': phone,
-            'isAdmin': False
-        }
+        verification_code = random.randint(100000, 999999)
 
-        users_collection.insert_one(user_data)
-        # Redirect or render another page
-        return redirect(url_for('signin'))
-    else:
-        # Render the registration form (GET request)
-        return render_template('register.html')
+        message = Mail(
+            from_email = 'e2521987@ceng.metu.edu.tr',
+            to_emails = email,
+            subject = 'CENGden Registration',
+            html_content = f'Your verification code is {verification_code}. Please enter this code to complete your registration.')
+        
+        try:
+            sg = SendGridAPIClient('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')
+            response = sg.send(message)
+            # print(response.status_code)
+            # print(response.body)
+            # print(response.headers)
+        except Exception as e:
+            print(e)
+
+        return render_template('verification.html',username=username, password=password, phone=phone, email=email, verification_code=verification_code, methods = ['POST'])
+        # return redirect(url_for('verify', email=email, verification_code=verification_code))
+    return render_template('register.html')
+
+@app.route('/verify/<string:username>/<string:password>/<string:email>/<string:phone>/<string:verification_code>', methods=['POST'])
+def verify(username, password, email, phone, verification_code):
+    if request.method == 'POST':
+        code = request.form['verification_code']
+        if code == verification_code:
+            user_data = {
+                'username': username,
+                'password': password,
+                'email': email,
+                'phone': phone,
+                'isAdmin': False
+            }
+            users_collection.insert_one(user_data)
+            return redirect(url_for('signin'))
+        else:
+            flash('Invalid verification code', 'error')
+            return redirect(url_for('register'))
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -499,8 +526,7 @@ def edit_vehicle(product_id):
         else:
             isRegularAllowed = True
         
-        old_vehicle = products_collection.find_one({'_id': ObjectId(product_id)})
-        old_price = old_vehicle.get('price', 0)
+        old_price = products_collection.find_one({'_id': ObjectId(product_id)}).get('price')
 
         products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
             'title': title,
@@ -522,6 +548,22 @@ def edit_vehicle(product_id):
         if(price < old_price):
             favoriteList = products_collection.find_one({'_id': ObjectId(product_id)}).get('favoriteList', [])
             #TODO: Send email to users in favoriteList
+            for user in favoriteList:
+                user_email = users_collection.find_one({'username': user}).get('email', '')
+                message = Mail(
+                    from_email = 'e2521987@ceng.metu.edu.tr',
+                    to_emails = user_email,
+                    subject = 'Price Reduction Alert',
+                    html_content = f'The price of the product {title} has been reduced. Check it out on CENGden!')
+                try:
+                    sg = SendGridAPIClient('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')
+                    response = sg.send(message)
+                    # print(response.status_code)
+                    # print(response.body)
+                    # print(response.headers)
+                except Exception as e:
+                    print(e)
+            
         return redirect(url_for('profile'))
     
     vehicle = products_collection.find_one({'_id': ObjectId(product_id)})
@@ -550,6 +592,8 @@ def edit_computer(product_id):
         else:
             isRegularAllowed = True
 
+        old_price = products_collection.find_one({'_id': ObjectId(product_id)}).get('price', 0)
+
         products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
             'title': title,
             'type': computer_type,
@@ -566,6 +610,24 @@ def edit_computer(product_id):
             'description': description,
             'isRegularAllowed': isRegularAllowed
         }})
+
+        if(price < old_price):
+            favoriteList = products_collection.find_one({'_id': ObjectId(product_id)}).get('favoriteList', [])
+            for user in favoriteList:
+                user_email = users_collection.find_one({'username': user}).get('email', '')
+                message = Mail(
+                    from_email = 'e2521987@ceng.metu.edu.tr',
+                    to_emails = user_email,
+                    subject = 'Price Reduction Alert',
+                    html_content = f'The price of the product {title} has been reduced. Check it out on CENGden!')
+                try:
+                    sg = SendGridAPIClient('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')
+                    response = sg.send(message)
+                    # print(response.status_code)
+                    # print(response.body)
+                    # print(response.headers)
+                except Exception as e:
+                    print(e)
 
         return redirect(url_for('profile'))
     computer = products_collection.find_one({'_id': ObjectId(product_id)})
@@ -594,6 +656,8 @@ def edit_phone(product_id):
         else:
             isRegularAllowed = True
 
+        old_price = products_collection.find_one({'_id': ObjectId(product_id)}).get('price', 0)
+
         products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
             'title': title,
             'brand': brand,
@@ -610,6 +674,24 @@ def edit_phone(product_id):
             'description': description,
             'isRegularAllowed': isRegularAllowed
         }})
+
+        if(price < old_price):
+            favoriteList = products_collection.find_one({'_id': ObjectId(product_id)}).get('favoriteList', [])
+            for user in favoriteList:
+                user_email = users_collection.find_one({'username': user}).get('email', '')
+                message = Mail(
+                    from_email = 'e2521987@ceng.metu.edu.tr',
+                    to_emails = user_email,
+                    subject = 'Price Reduction Alert',
+                    html_content = f'The price of the product {title} has been reduced. Check it out on CENGden!')
+                try:
+                    sg = SendGridAPIClient('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')
+                    response = sg.send(message)
+                    # print(response.status_code)
+                    # print(response.body)
+                    # print(response.headers)
+                except Exception as e:
+                    print(e)
 
         return redirect(url_for('profile'))
     phone = products_collection.find_one({'_id': ObjectId(product_id)})
@@ -633,6 +715,8 @@ def edit_private_lesson(product_id):
         else:
             isRegularAllowed = True
 
+        old_price = products_collection.find_one({'_id': ObjectId(product_id)}).get('price', 0)
+
         products_collection.update_one({'_id': ObjectId(product_id)}, {'$set': {
             'title': title,
             'tutor_name': tutor_name,
@@ -645,6 +729,24 @@ def edit_private_lesson(product_id):
             'isRegularAllowed': isRegularAllowed
         }})
 
+        if(price < old_price):
+            favoriteList = products_collection.find_one({'_id': ObjectId(product_id)}).get('favoriteList', [])
+            for user in favoriteList:
+                user_email = users_collection.find_one({'username': user}).get('email', '')
+                message = Mail(
+                    from_email = 'e2521987@ceng.metu.edu.tr',
+                    to_emails = user_email,
+                    subject = 'Price Reduction Alert',
+                    html_content = f'The price of the product {title} has been reduced. Check it out on CENGden!')
+                try:
+                    sg = SendGridAPIClient('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')
+                    response = sg.send(message)
+                    # print(response.status_code)
+                    # print(response.body)
+                    # print(response.headers)
+                except Exception as e:
+                    print(e)
+                
         return redirect(url_for('profile'))
     private_lesson = products_collection.find_one({'_id': ObjectId(product_id)})
     return render_template('edit_private_lesson.html', private_lesson=private_lesson)
