@@ -98,7 +98,7 @@ def register():
 @app.route('/verify/<string:username>/<string:password>/<string:email>/<string:phone>/<string:verification_code>', methods=['POST'])
 def verify(username, password, email, phone, verification_code):
     if request.method == 'POST':
-        code = request.form['verification_code']
+        code = request.form['verification']
         if code == verification_code:
             user_data = {
                 'username': username,
