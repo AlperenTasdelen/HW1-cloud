@@ -132,6 +132,8 @@ def login():
 def index():
     # username = session.get('username')
     # session['username'] = username
+    if(session.get('username') == None):
+        return render_template('index.html')
     return render_template('index.html', username = session.get('username'))
 
 @app.route('/products')
